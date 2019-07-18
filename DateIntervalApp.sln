@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateIntervalApp", "DateIntervalApp\DateIntervalApp.csproj", "{86FF2131-095C-4BBE-861F-B55B7C137DAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateIntervalTests", "DateIntervalTests\DateIntervalTests.csproj", "{09F06CB3-F49B-4C25-9D15-16A55B2BC443}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86FF2131-095C-4BBE-861F-B55B7C137DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FF2131-095C-4BBE-861F-B55B7C137DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FF2131-095C-4BBE-861F-B55B7C137DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FF2131-095C-4BBE-861F-B55B7C137DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F06CB3-F49B-4C25-9D15-16A55B2BC443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F06CB3-F49B-4C25-9D15-16A55B2BC443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F06CB3-F49B-4C25-9D15-16A55B2BC443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F06CB3-F49B-4C25-9D15-16A55B2BC443}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F692587F-4287-405E-B389-7C98FD22302B}
+	EndGlobalSection
+EndGlobal
