@@ -289,7 +289,7 @@
             this.groupBox4.Size = new System.Drawing.Size(316, 60);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Time to subtruct";
+            this.groupBox4.Text = "Time to subtract";
             // 
             // DateIntervalFrm
             // 
