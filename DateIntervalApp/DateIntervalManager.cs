@@ -169,13 +169,6 @@ namespace DateIntervalApp
             int monthInt = finalInterval.GetMonths();
             int dayInt = finalInterval.GetDays();
 
-            //while (finalInterval.GetDays() >= DAYS_LIMIT)
-            //{
-
-            //    finalInterval.setDays(finalInterval.GetDays() - DAYS_LIMIT);
-            //    finalInterval.setMonths(finalInterval.GetMonths() + 1);
-
-            //}
 
             adjustDays(ref monthInt, ref dayInt);          
 
@@ -184,13 +177,6 @@ namespace DateIntervalApp
             finalInterval.setYears(yearInt);
             finalInterval.setMonths(monthInt);
 
-            //while (finalInterval.GetMonths() >= MONTHS_LIMIT)
-            //{
-
-            //    finalInterval.setMonths(finalInterval.GetMonths() - MONTHS_LIMIT);
-            //    finalInterval.setYears(finalInterval.GetYears() + 1);
-
-            //}
 
             dateInterval = finalInterval;
 
@@ -203,9 +189,9 @@ namespace DateIntervalApp
         /// <summary>
         /// Subtract time from the given interval.
         /// </summary>
-        /// <param name="years2Sub">Years to subtruct from the interval</param>
-        /// <param name="months2Sub">Months to subtruct from the interval</param>
-        /// <param name="days2Sub">Days to subtruct from the interval</param>
+        /// <param name="years2Sub">Years to subtract from the interval</param>
+        /// <param name="months2Sub">Months to subtract from the interval</param>
+        /// <param name="days2Sub">Days to subtract from the interval</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown when one of the arguments makes the subtraction invalid.
         /// </exception>
