@@ -153,6 +153,47 @@ namespace DateIntervalTests
         }
 
 
+        [TestMethod]
+        [Description("Asserts that AdjustMonths method recalculates months" +
+                     " when they exceed the corresponding limit.")]
+        [Owner("KD")]
+        [TestProperty("Date", "2019-07-19")]
+        public void Test_AdjustMonths()
+        {
+        
+            int yearDiff = 0;
+            int monthDiff = 13;
+            
+            
+            DateIntervalManager.adjustMonths(ref yearDiff,ref monthDiff);
+
+            Assert.AreEqual(1,yearDiff,"Years interval is not the expected one");
+            Assert.AreEqual(1,monthDiff,"Months interval is not the expected one");
+
+        }
+
+
+
+
+        [TestMethod]
+        [Description("Asserts that AdjustDays method recalculates days" +
+                     " when they exceed the corresponding limit.")]
+        [Owner("KD")]
+        [TestProperty("Date", "2019-07-19")]
+        public void Test_AdjustDays()
+        {
+        
+            int monthDiff = 0;
+            int dayDiff = 53;
+            
+           
+            DateIntervalManager.adjustDays(ref monthDiff,ref dayDiff);
+
+            Assert.AreEqual(1,monthDiff,"Months interval is not the expected one");
+            Assert.AreEqual(23,dayDiff,"Days interval is not the expected one");
+
+        }
+
 
     }
 
