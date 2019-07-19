@@ -128,7 +128,7 @@ namespace DateIntervalApp
         }
 
 
-        private static void adjustMonths(ref int yearDiff, ref int monthDiff)
+        public static void adjustMonths(ref int yearDiff, ref int monthDiff)
         {
             while (monthDiff >= MONTHS_LIMIT)
             {
@@ -139,7 +139,7 @@ namespace DateIntervalApp
         }
 
 
-        private static void adjustDays(ref int monthDiff, ref int dayDiff)
+        public static void adjustDays(ref int monthDiff, ref int dayDiff)
         {
             while (dayDiff >= DAYS_LIMIT)
             {
