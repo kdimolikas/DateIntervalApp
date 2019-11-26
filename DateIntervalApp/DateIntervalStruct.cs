@@ -9,11 +9,9 @@ namespace DateIntervalApp
     public struct DateIntervalStruct
     {
 
-
-        public int years;
-        public int months;
-        public int days;
-
+        private int years;
+        private int months;
+        private int days;
 
         public DateIntervalStruct(int y, int m, int d)
         {
@@ -29,36 +27,30 @@ namespace DateIntervalApp
             return years;
         }
 
-
         public int GetMonths()
         {
             return months;
         }
-
 
         public int GetDays()
         {
             return days;
         }
 
-
         /*Setters*/
-        public void setYears(int y)
+        public void SetYears(int y)
         {
             this.years = y;
         }
 
-        public void setMonths(int m)
+        public void SetMonths(int m)
         {
             this.months = m;
         }
 
-        public void setDays(int d)
+        public void SetDays(int d)
         {
             this.days = d;
         }
-
-
     }
-
 }
