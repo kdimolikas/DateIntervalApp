@@ -11,11 +11,9 @@ using System;
 namespace DateIntervalTests
 {
        
-
     [TestClass]
     public class DateIntervalManagerTests
     {
-
 
         [TestMethod]
         [Description("Asserts that an exception is thrown when dates' order is invalid.")]
@@ -28,10 +26,8 @@ namespace DateIntervalTests
 
             DateIntervalManager manager = new DateIntervalManager(date1, date2);
                        
-            Assert.ThrowsException<ArgumentException>(() => manager.SetDateInterval());
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => manager.SetDateInterval());
         }
-
-
 
         [TestMethod]
         [Description("Asserts that the results of the SetDateInterval method.")]
@@ -50,22 +46,20 @@ namespace DateIntervalTests
 
             manager1.SetDateInterval();
            
-            Assert.AreEqual(0, manager1.GetDateInterval().years);
-            Assert.AreEqual(6, manager1.GetDateInterval().months);
-            Assert.AreEqual(0, manager1.GetDateInterval().days);
+            Assert.AreEqual(0, manager1.Years);
+            Assert.AreEqual(6, manager1.Months);
+            Assert.AreEqual(0, manager1.Days);
 
             /*Second example*/
             DateIntervalManager manager2 = new DateIntervalManager(date3, date4);
 
             manager2.SetDateInterval();
 
-            Assert.AreEqual(0, manager2.GetDateInterval().years);
-            Assert.AreEqual(9, manager2.GetDateInterval().months);
-            Assert.AreEqual(18, manager2.GetDateInterval().days);
+            Assert.AreEqual(0, manager2.Years);
+            Assert.AreEqual(9, manager2.Months);
+            Assert.AreEqual(18, manager2.Days);
 
         }
-
-
 
         [TestMethod]
         [Description("Asserts that AddTime method adds {years,months,days} correctly.")]
@@ -81,16 +75,13 @@ namespace DateIntervalTests
             int days2Add = 10;
 
             DateIntervalManager manager = new DateIntervalManager(date1,date2);
-            manager.SetDateInterval();
             manager.AddTime(years2Add, months2Add, days2Add);
 
-            Assert.AreEqual(2, manager.GetDateInterval().years,"Expected and actual years differ.");
-            Assert.AreEqual(9, manager.GetDateInterval().months, "Expected and actual months differ.");
-            Assert.AreEqual(10, manager.GetDateInterval().days, "Expected and actual days differ.");
+            Assert.AreEqual(2, manager.Years,"Expected and actual years differ.");
+            Assert.AreEqual(9, manager.Months, "Expected and actual months differ.");
+            Assert.AreEqual(10, manager.Days, "Expected and actual days differ.");
 
         }
-
-
 
         [TestMethod]
         [Description("Asserts that SubtractTime method subtracts {years,months,days} correctly.")]
@@ -106,17 +97,13 @@ namespace DateIntervalTests
             DateTime date1 = new DateTime(2016, 1, 1);
             DateTime date2 = new DateTime(2019, 7, 10);
             DateIntervalManager manager = new DateIntervalManager(date1, date2);
-            manager.SetDateInterval();
            
-            
             manager.SubtractTime(years2Sub, months2Sub, days2Sub);
-            Assert.AreEqual(1, manager.GetDateInterval().years, "Expected and actual years differ.");
-            Assert.AreEqual(3, manager.GetDateInterval().months, "Expected and actual months differ.");
-            Assert.AreEqual(0, manager.GetDateInterval().days, "Expected and actual days differ.");
+            Assert.AreEqual(1, manager.Years, "Expected and actual years differ.");
+            Assert.AreEqual(3, manager.Months, "Expected and actual months differ.");
+            Assert.AreEqual(0, manager.Days, "Expected and actual days differ.");
 
         }
-
-
 
         [TestMethod]
         [Description("Asserts that SubtractTime method throws exception when at least" +
@@ -133,25 +120,19 @@ namespace DateIntervalTests
             DateTime date1 = new DateTime(2019, 1, 1);
             DateTime date2 = new DateTime(2019, 7, 10);
             DateIntervalManager manager = new DateIntervalManager(date1, date2);
-            manager.SetDateInterval();
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => manager.SubtractTime(years2Sub, months2Sub, days2Sub));
 
             /*Invalid subtraction(daysDiff<0)*/
             date1.AddYears(-3);
             months2Sub = 7;
             days2Sub = 10;
-            manager.SetDateInterval();
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => manager.SubtractTime(years2Sub, months2Sub, days2Sub));
 
             /*Invalid subtraction(monthsDiff<0)*/
             date1.AddYears(3);
             months2Sub = 7;
-            manager.SetDateInterval();
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => manager.SubtractTime(years2Sub, months2Sub, days2Sub));
-
-
         }
-
 
         [TestMethod]
         [Description("Asserts that AdjustMonths method recalculates months" +
@@ -163,17 +144,12 @@ namespace DateIntervalTests
         
             int yearDiff = 0;
             int monthDiff = 13;
-            
-            
-            DateIntervalManager.adjustMonths(ref yearDiff,ref monthDiff);
+                    
+            DateIntervalManager.AdjustMonths(ref yearDiff,ref monthDiff);
 
             Assert.AreEqual(1,yearDiff,"Years interval is not the expected one");
             Assert.AreEqual(1,monthDiff,"Months interval is not the expected one");
-
         }
-
-
-
 
         [TestMethod]
         [Description("Asserts that AdjustDays method recalculates days" +
@@ -182,20 +158,13 @@ namespace DateIntervalTests
         [TestProperty("Date", "2019-07-19")]
         public void Test_AdjustDays()
         {
-        
             int monthDiff = 0;
             int dayDiff = 53;
             
-           
-            DateIntervalManager.adjustDays(ref monthDiff,ref dayDiff);
+            DateIntervalManager.AdjustDays(ref monthDiff,ref dayDiff);
 
             Assert.AreEqual(1,monthDiff,"Months interval is not the expected one");
             Assert.AreEqual(23,dayDiff,"Days interval is not the expected one");
-
         }
-
-
     }
-
-
 }
