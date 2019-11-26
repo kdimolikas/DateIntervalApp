@@ -18,7 +18,38 @@ namespace DateIntervalApp
         private DateTime date2;
         private DateIntervalStruct dateInterval;
 
+        /// <summary>
+        /// Get the years of the interval
+        /// </summary>
+        public int Years
+        {
+            get
+            {
+                return this.dateInterval.GetYears();
+            }
+        }
 
+        /// <summary>
+        ///Get the months of the interval 
+        /// </summary>
+        public int Months
+        {
+            get
+            {
+                return this.dateInterval.GetMonths();
+            }
+        }
+
+        /// <summary>
+        /// Get the days of the interval
+        /// </summary>
+        public int Days
+        {
+            get
+            {
+                return this.dateInterval.GetDays();
+            }
+        }
 
         public DateIntervalManager(DateTime d1, DateTime d2)
         {
@@ -26,24 +57,15 @@ namespace DateIntervalApp
             date2 = d2;
         }
 
-
-        public DateIntervalStruct GetDateInterval()
-        {
-            return this.dateInterval;
-        }
-
-
-        public void SetDate1(DateTime d1)
+        public void SetFirstDate(DateTime d1)
         {
             this.date1 = d1;
         }
 
-
-        public void SetDate2(DateTime d2)
+        public void SetSecondDate(DateTime d2)
         {
             this.date2 = d2;
         }
-
 
         /// <summary>
         /// Computes the interval between 2 dates.
@@ -56,7 +78,6 @@ namespace DateIntervalApp
         /// </exception>
         public void SetDateInterval()
         {
-
 
             //interval in years, months, days
             int yearDiff = 0, monthDiff = 0, dayDiff = 0;
@@ -72,46 +93,36 @@ namespace DateIntervalApp
 
             if (year1 > year2)
             {
-
-                throw new ArgumentException("year of second date must be equal or greater than that of the first date");
+                throw new ArgumentOutOfRangeException("year of second date must be equal or greater than that of the first date");
             }
-
 
             if (month1 > month2)
             {
-
                 yearDiff = year2 - year1 - 1;
                 monthDiff = (MONTHS_LIMIT + month2 - 1) - month1;
                 dayDiff = DAYS_LIMIT - day1 + day2;
-
             }
             else
             {
-
                 yearDiff = year2 - year1;
 
                 if (day1 < day2)
                 {
                     monthDiff = month2 - month1;
                     dayDiff = day2 - day1;
-
                 }
                 else
                 {
-
                     monthDiff = month2 - month1 - 1;
                     dayDiff = DAYS_LIMIT - day1 + day2;
                 }
-
             }
 
-
             /*Recalculate days if dayDiff is greater than DAYS_LIMIT*/
-            adjustDays(ref monthDiff, ref dayDiff);
+            AdjustDays(ref monthDiff, ref dayDiff);
 
             /*Recalculate months if monthDiff is greater than 12*/
-            adjustMonths(ref yearDiff, ref monthDiff);
-
+            AdjustMonths(ref yearDiff, ref monthDiff);
 
             if (dateInterval.Equals(null))
             {
@@ -119,27 +130,22 @@ namespace DateIntervalApp
             }
             else
             {
-                dateInterval.setYears(yearDiff);
-                dateInterval.setMonths(monthDiff);
-                dateInterval.setDays(dayDiff);
+                dateInterval.SetYears(yearDiff);
+                dateInterval.SetMonths(monthDiff);
+                dateInterval.SetDays(dayDiff);
             }
-
-
         }
 
-
-        public static void adjustMonths(ref int yearDiff, ref int monthDiff)
+        public static void AdjustMonths(ref int yearDiff, ref int monthDiff)
         {
             while (monthDiff >= MONTHS_LIMIT)
             {
                 monthDiff -= MONTHS_LIMIT;
                 yearDiff += 1;
-
             }
         }
 
-
-        public static void adjustDays(ref int monthDiff, ref int dayDiff)
+        public static void AdjustDays(ref int monthDiff, ref int dayDiff)
         {
             while (dayDiff >= DAYS_LIMIT)
             {
@@ -148,43 +154,21 @@ namespace DateIntervalApp
             }
         }
 
-
-
         /// <summary>
         /// Add time to the given interval.
         /// </summary>
         /// <param name="years2Add">Years to add to the interval</param>
         /// <param name="months2Add">Months to add to the interval</param>
         /// <param name="days2Add">Days to add to the interval</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown when one of the arguments makes the subtraction invalid.
+        /// </exception>
         public void AddTime(int years2Add, int months2Add, int days2Add)
         {
-                       
-            DateIntervalStruct finalInterval = dateInterval;
-
-            finalInterval.setYears(finalInterval.GetYears() + years2Add);
-            finalInterval.setMonths(finalInterval.GetMonths() + months2Add);
-            finalInterval.setDays(finalInterval.GetDays() + days2Add);
-
-            int yearInt = finalInterval.GetYears();
-            int monthInt = finalInterval.GetMonths();
-            int dayInt = finalInterval.GetDays();
-
-
-            adjustDays(ref monthInt, ref dayInt);          
-
-            adjustMonths(ref yearInt , ref monthInt);
-
-            finalInterval.setYears(yearInt);
-            finalInterval.setMonths(monthInt);
-
-
-            dateInterval = finalInterval;
-
-
-
+            this.SetDateInterval();
+            this.AddSubtractTime(years2Add, months2Add, days2Add);            
+            this.SetDateInterval();
         }
-
-
 
         /// <summary>
         /// Subtract time from the given interval.
@@ -197,67 +181,38 @@ namespace DateIntervalApp
         /// </exception>
         public void SubtractTime(int years2Sub, int months2Sub, int days2Sub)
         {
+            //Make arguments negative
+            years2Sub = (years2Sub > 0) ? (-1) * years2Sub : years2Sub;
+            months2Sub = (months2Sub > 0) ? (-1) * months2Sub : months2Sub;
+            days2Sub = (days2Sub > 0) ? (-1) * days2Sub : days2Sub;
 
-            
-            DateIntervalStruct finalInterval = dateInterval;
+            this.SetDateInterval();
+            this.AddSubtractTime(years2Sub, months2Sub, days2Sub);
+            this.SetDateInterval();
+        }       
 
-            finalInterval.setYears(finalInterval.GetYears() - years2Sub);
-            finalInterval.setMonths(finalInterval.GetMonths() - months2Sub);
-            finalInterval.setDays(finalInterval.GetDays() - days2Sub);
+        /// <summary>
+        /// Add (or subtract) the given params from the second date
+        /// </summary>
+        /// <param name="years">Years to add(or subtract)</param>
+        /// <param name="months">Months to add(or subtract)</param>
+        /// <param name="days">Days to add(or subtract)</param>
+        private void AddSubtractTime(int years, int months, int days)
+        {
+            DateTime oldDate = new DateTime();
+            oldDate = date2;
 
-            if (finalInterval.GetYears() < 0)
+            try
             {
-                Console.WriteLine("(ERROR): Years to subtract cannot exceed years of the given interval.");
-                finalInterval = dateInterval;
-                throw new ArgumentOutOfRangeException("Invalid number of years to subtract.");
-
+                oldDate = oldDate.AddYears(years);
+                oldDate = oldDate.AddMonths(months);
+                oldDate = oldDate.AddDays(days);
+                date2 = oldDate;
             }
-            else
+            catch(ArgumentOutOfRangeException ex)
             {
-                while (finalInterval.GetDays() < 0)
-                {
-                    if (finalInterval.GetMonths() > 0)
-                    {
-                        finalInterval.setDays(finalInterval.GetDays() + DAYS_LIMIT);
-                        finalInterval.setMonths(finalInterval.GetMonths() - 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("(ERROR): Cannot complete the subtraction");
-                        finalInterval = dateInterval;
-                        throw new ArgumentOutOfRangeException("Invalid number of days to subtract.");
-                    }
-
-                }
-
-
-                while (finalInterval.GetMonths() < 0)
-                {
-
-                   
-                    if (finalInterval.GetYears() > 0)
-                    {
-                        finalInterval.setMonths(finalInterval.GetMonths() + MONTHS_LIMIT);
-                        finalInterval.setYears(finalInterval.GetYears() - 1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("(ERROR): Cannot complete the subtraction");
-                        finalInterval = dateInterval;
-                        throw new ArgumentOutOfRangeException("Invalid number of months to subtract.");
-                    }
-
-                }
-
+                Console.WriteLine(ex.StackTrace);
             }
-
-            dateInterval = finalInterval;
-
-
         }
-
-        
     }
-
-
 }
